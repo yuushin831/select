@@ -9,6 +9,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Song.h"
 
 /// <summary>
 /// ゲームシーン
@@ -50,4 +51,13 @@ class GameScene {
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	
+	uint32_t textureHandleBG_ = 0;
+	Sprite* spriteBG_ = nullptr;
+
+	uint32_t textureHandle_ = 0;
+	Sprite* spriteSong_;
+	WorldTransform worldTransform_;
+
+	Song* song_;
 };

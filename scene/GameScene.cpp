@@ -1,10 +1,17 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include"Song.h"
+#include "SetMatrix.h"
+
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+	delete spriteBG_;
+	delete spriteSong_;
+	
+}
 
 void GameScene::Initialize() {
 
@@ -12,9 +19,21 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
+
+	worldTransform_.Initialize();
+	//viewProjection_.Initialize();
+
+	//背景
+	textureHandleBG_ = TextureManager::Load("moyou01.png");
+	spriteBG_ = Sprite::Create(textureHandleBG_, { 0,0 });
+
+	song_ = new Song();
+	song_->Initialize();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+	song_->Update();
+}
 
 void GameScene::Draw() {
 
@@ -28,6 +47,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
+	spriteBG_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -54,6 +74,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	song_->Draw();
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
